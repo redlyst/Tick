@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:dio/dio.dart';
 import 'package:ticketing/color_pallete.dart';
+import 'package:ticketing/page_view_card.dart';
+import 'package:ticketing/tracking_lines.dart';
 import 'model.dart';
 import 'page_view_card_list_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,15 +16,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _grAppBarTitleText = 'Good Received Posting';
-  String _qcAppBarTitleText = 'UT QC Pass Posting';
-  String _defaultAppBarTitleText = '';
-  String _grRoleTitleText = 'Good Received';
-  String _qcRoleTitleText = 'Quality Check';
-  String _defaultRoleTitleText = '';
-  // String _username = '';
-  String _status = '';
-  String _role = '';
+  int _currentIndex = 0;
+  PageController _pageController = PageController(
+    viewportFraction: 0.92,
+    initialPage: 0,
+  );
 
   String _scanResult;
   String _assetName = '';
@@ -260,27 +258,44 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          Padding(
-            padding: EdgeInsets.only(top: 15, bottom: 15),
-            // padding: const EdgeInsets.symmetric(horizontal: 7.0),
-            child: Card(
-              elevation: 0,
-              // color: Color.fromRGBO(64, 122, 255, 1),
-              color: Color(0xFFf0f0f0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[buildTicket()],
+          Container(
+            // height: MediaQuery.of(context).size.height / 1.8,
+            height: 550,
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: PageView(
+                    controller: _pageController,
+                    children: <Widget>[
+                      buildTicket(),
+                      buildTicket(),
+                      buildTicket(),
+                      buildTicket(),
+                      buildTicket(),
+                      // PageViewCard(),
+                      // PageViewCard(),
+                      // PageViewCard(),
+                      // PageViewCard(),
+                      // PageViewCard(),
+                    ],
+                  ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: TrackingLines(
+                      length: 5,
+                      currentIndex: _currentIndex,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+
+          // buildTicket(),
 
           buildMenu(context),
           /* Visibility(
@@ -416,49 +431,72 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildTicket() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          PageViewCardListTile(
-            title: 'Ticket ID',
-            content: '6969',
-            biggerContent: true,
+    return Padding(
+      padding: EdgeInsets.only(top: 15, bottom: 15, right: 15),
+      // padding: const EdgeInsets.symmetric(horizontal: 7.0),
+      child: Card(
+        elevation: 0,
+        // color: Color.fromRGBO(64, 122, 255, 1),
+        color: Color(0xFFf0f0f0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  PageViewCardListTile(
+                    title: 'Ticket ID',
+                    content: '6969',
+                    biggerContent: true,
+                  ),
+                  PageViewCardListTile(
+                      title: 'Subject', content: 'No Internet Connection'),
+                  PageViewCardListTile(
+                      title: 'Reported By',
+                      content: '1341180078 / Muhammad Akbar Hidayatullah'),
+                  PageViewCardListTile(
+                      title: 'Department', content: 'IT Function'),
+                  PageViewCardListTile(
+                      title: 'Email', content: 'muhammad.akbar@patria.co.id'),
+                  PageViewCardListTile(
+                      title: 'Asset Name', content: 'Personal Computer'),
+                  PageViewCardListTile(
+                      title: 'Message',
+                      content: 'Please help me to fix my internet connection'),
+                  PageViewCardListTile(
+                      title: 'Priority', content: 'Very Urgent'),
+                  PageViewCardListTile(
+                      title: 'Ticket Submit By',
+                      content: '1341180078 / Muhammad Akbar Hidayatullah'),
+                  PageViewCardListTile(title: 'Note', content: _nA),
+                  PageViewCardListTile(
+                    title: 'Report Date',
+                    content: '2020-01-19 18:00:00',
+                  ),
+                  PageViewCardListTile(
+                    title: 'Respond Time',
+                    content: _nA,
+                  ),
+                  PageViewCardListTile(
+                    title: 'Resolve Time',
+                    content: _nA,
+                  ),
+                  PageViewCardListTile(
+                    title: 'Status',
+                    content: 'Waiting',
+                  ),
+                ],
+              )
+            ],
           ),
-          PageViewCardListTile(
-              title: 'Subject', content: 'No Internet Connection'),
-          PageViewCardListTile(
-              title: 'Reported By',
-              content: '1341180078 / Muhammad Akbar Hidayatullah'),
-          PageViewCardListTile(title: 'Department', content: 'IT Function'),
-          PageViewCardListTile(
-              title: 'Email', content: 'muhammad.akbar@patria.co.id'),
-          PageViewCardListTile(
-              title: 'Asset Name', content: 'Personal Computer'),
-          PageViewCardListTile(
-              title: 'Message',
-              content: 'Please help me to fix my internet connection'),
-          PageViewCardListTile(title: 'Priority', content: 'Very Urgent'),
-          PageViewCardListTile(
-              title: 'Ticket Submit By',
-              content: '1341180078 / Muhammad Akbar Hidayatullah'),
-          PageViewCardListTile(title: 'Note', content: _nA),
-          PageViewCardListTile(
-            title: 'Report Date',
-            content: '2020-01-19 18:00:00',
-          ),
-          PageViewCardListTile(
-            title: 'Respond Time',
-            content: _nA,
-          ),
-          PageViewCardListTile(
-            title: 'Resolve Time',
-            content: _nA,
-          ),
-          PageViewCardListTile(
-            title: 'Status',
-            content: 'Waiting',
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -634,6 +672,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _pageController.addListener(() {
+      setState(() => _currentIndex = _pageController.page.round());
+    });
     super.initState();
     // _scanResult = 'Please Scan';
     _scanResult = 'Please Scan';
