@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:dio/dio.dart';
 import 'package:ticketing/color_pallete.dart';
+import 'package:ticketing/model_ticket.dart';
 import 'package:ticketing/page_view_card.dart';
 import 'package:ticketing/tracking_lines.dart';
 import 'model.dart';
 import 'page_view_card_list_tile.dart';
 import 'package:flutter/cupertino.dart';
+import 'model_t.dart';
+import 'dart:convert';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,7 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.help, color: Colors.white),
               onPressed: () {
-                Navigator.pushNamed(context, '/shome');
+                // Navigator.pushNamed(context, '/shome');
+                getTicket();
               },
             )
           ],
@@ -675,9 +681,12 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController.addListener(() {
       setState(() => _currentIndex = _pageController.page.round());
     });
+
     super.initState();
     // _scanResult = 'Please Scan';
     _scanResult = 'Please Scan';
+    // getTicket();
+
     // _assetName = '';
     // _assetNumber = '';
     // _buyDate = '';
@@ -840,6 +849,30 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     print(barcodeScanRes);
+  }
+
+  void getTicket() async {
+    try {
+      Response response =
+          await Dio().get("http://10.2.49.12/it_is/Api/getLastTicket/");
+      // final getData = GetData.fromJson(response.data[0]);
+      // final getData = GetTicket.fromJson(response.data);
+
+      // print(response.data[0]["tiket_id"]);
+      // print(response.data.length);
+
+      String receivedJson = response.data;
+
+      List mylist = List();
+
+      for (var i = 0; i < response.data.length; i++) {
+        // print(response.data[i]["subject"]);
+        // print(GetTicket.fromJson(response.data[i]).assetName);
+        print(GetTicket.fromJson(response.data[i]).assetName);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void getHttp(String barcodeScan) async {
