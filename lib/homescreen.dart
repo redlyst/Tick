@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _locName = '';
   bool _sResultVisibility = false;
   String _nA = 'Not Available';
+  int _totalRequest;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -189,7 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            '666',
+                            _totalRequest != null
+                                ? _totalRequest.toString()
+                                : _nA,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline
@@ -273,18 +276,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: PageView(
                     controller: _pageController,
-                    children: <Widget>[
+                    children: ListWidget(),
+                    // children: <Widget>[
+                    /* buildTicket(),
                       buildTicket(),
                       buildTicket(),
                       buildTicket(),
-                      buildTicket(),
-                      buildTicket(),
-                      // PageViewCard(),
-                      // PageViewCard(),
-                      // PageViewCard(),
-                      // PageViewCard(),
-                      // PageViewCard(),
-                    ],
+                      buildTicket(), */
+                    // PageViewCard(),
+                    // PageViewCard(),
+                    // PageViewCard(),
+                    // PageViewCard(),
+                    // PageViewCard(),
+                    // ],
                   ),
                 ),
                 Align(
@@ -436,7 +440,21 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  Widget buildTicket() {
+  Widget buildTicket(
+      String id,
+      String subject,
+      String reportNrpName,
+      String department,
+      String email,
+      String assetName,
+      String message,
+      String priority,
+      String submitBy,
+      String note,
+      String reportDate,
+      String respondTime,
+      String resolveTime,
+      String status) {
     return Padding(
       padding: EdgeInsets.only(top: 15, bottom: 15, right: 15),
       // padding: const EdgeInsets.symmetric(horizontal: 7.0),
@@ -459,44 +477,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   PageViewCardListTile(
                     title: 'Ticket ID',
-                    content: '6969',
+                    content: id,
                     biggerContent: true,
                   ),
+                  PageViewCardListTile(title: 'Subject', content: subject),
                   PageViewCardListTile(
-                      title: 'Subject', content: 'No Internet Connection'),
+                      title: 'Reported By', content: reportNrpName),
                   PageViewCardListTile(
-                      title: 'Reported By',
-                      content: '1341180078 / Muhammad Akbar Hidayatullah'),
+                      title: 'Department', content: department),
+                  PageViewCardListTile(title: 'Email', content: email),
+                  PageViewCardListTile(title: 'Asset Name', content: assetName),
+                  PageViewCardListTile(title: 'Message', content: message),
+                  PageViewCardListTile(title: 'Priority', content: priority),
                   PageViewCardListTile(
-                      title: 'Department', content: 'IT Function'),
-                  PageViewCardListTile(
-                      title: 'Email', content: 'muhammad.akbar@patria.co.id'),
-                  PageViewCardListTile(
-                      title: 'Asset Name', content: 'Personal Computer'),
-                  PageViewCardListTile(
-                      title: 'Message',
-                      content: 'Please help me to fix my internet connection'),
-                  PageViewCardListTile(
-                      title: 'Priority', content: 'Very Urgent'),
-                  PageViewCardListTile(
-                      title: 'Ticket Submit By',
-                      content: '1341180078 / Muhammad Akbar Hidayatullah'),
-                  PageViewCardListTile(title: 'Note', content: _nA),
+                      title: 'Ticket Submit By', content: submitBy),
+                  PageViewCardListTile(title: 'Note', content: note),
                   PageViewCardListTile(
                     title: 'Report Date',
-                    content: '2020-01-19 18:00:00',
+                    content: reportDate,
                   ),
                   PageViewCardListTile(
                     title: 'Respond Time',
-                    content: _nA,
+                    content: respondTime,
                   ),
                   PageViewCardListTile(
                     title: 'Resolve Time',
-                    content: _nA,
+                    content: resolveTime,
                   ),
                   PageViewCardListTile(
                     title: 'Status',
-                    content: 'Waiting',
+                    content: status,
                   ),
                 ],
               )
@@ -678,6 +688,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    getTicket();
     _pageController.addListener(() {
       setState(() => _currentIndex = _pageController.page.round());
     });
@@ -851,6 +862,73 @@ class _HomeScreenState extends State<HomeScreen> {
     print(barcodeScanRes);
   }
 
+  List _id = List();
+  List _tiket_id = List();
+  List _assist_id = List();
+  List _subject = List();
+  List _reporter_nrp = List();
+  List _reporter_name = List();
+  List _department = List();
+  List _email = List();
+  List _asset_id = List();
+  List _asset_name = List();
+  List _message = List();
+  List _notification = List();
+  List _media = List();
+  List _priority = List();
+  List _submitter = List();
+  List _note = List();
+  List _last_modified = List();
+  List _reported_at = List();
+  List _respond_time = List();
+  List _resolve_time = List();
+  List _status = List();
+
+  List<Widget> ListWidget() {
+    List<Widget> list = new List();
+
+    if (_totalRequest == null) {
+      list.add(Text("Loading..."));
+    } else {
+      for (var i = 0; i < _totalRequest; i++) {
+        // list.add(Text(_subject[i]));
+        list.add(buildTicket(
+            _id[i] != null ? _id[i] : _nA,
+            _subject[i] != null ? _subject[i] : _nA,
+            _reporter_name[i] != null ? _reporter_name[i] : _nA,
+            _department[i] != null ? _department[i] : _nA,
+            _email[i] != null ? _email[i] : _nA,
+            _asset_name[i] != null ? _asset_name[i] : _nA,
+            _message[i] != null ? _message[i] : _nA,
+            _priority[i] != null ? _priority[i] : _nA,
+            _submitter[i] != null ? _submitter[i] : _nA,
+            _note[i] != null ? _note[i] : _nA,
+            _reported_at[i] != null ? _reported_at[i] : _nA,
+            _respond_time[i] != null ? _respond_time[i] : _nA,
+            _resolve_time[i] != null ? _resolve_time[i] : _nA,
+            _status[i] != null ? _status[i] : _nA));
+
+        /* list.add(buildTicket(
+          "1",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+          "2",
+        )); */
+      }
+    }
+    return list;
+  }
+
   void getTicket() async {
     try {
       Response response =
@@ -860,8 +938,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // print(response.data[0]["tiket_id"]);
       // print(response.data.length);
+      setState(() {
+        _totalRequest = response.data.length;
+        for (var i = 0; i < _totalRequest; i++) {
+          _id.add(response.data[i]["id"]);
+          _tiket_id.add(response.data[i]["tiket_id"]);
+          _assist_id.add(response.data[i]["assist_id"]);
+          _subject.add(response.data[i]["subject"]);
+          _reporter_nrp.add(response.data[i]["reporter_nrp"]);
+          _reporter_name.add(response.data[i]["reporter_name"]);
+          _department.add(response.data[i]["department"]);
+          _email.add(response.data[i]["email"]);
+          _asset_id.add(response.data[i]["asset_id"]);
+          _asset_name.add(response.data[i]["asset_name"]);
+          _message.add(response.data[i]["message"]);
+          _notification.add(response.data[i]["notification"]);
+          _media.add(response.data[i]["media"]);
+          _priority.add(response.data[i]["priority"]);
+          _submitter.add(response.data[i]["submitter"]);
+          _note.add(response.data[i]["note"]);
+          _last_modified.add(response.data[i]["last_modified"]);
+          _reported_at.add(response.data[i]["reported_at"]);
+          _respond_time.add(response.data[i]["respond_time"]);
+          _resolve_time.add(response.data[i]["resolve_time"]);
+          _status.add(response.data[i]["status"]);
+        }
+      });
 
-      String receivedJson = response.data;
+      /* String receivedJson = response.data;
 
       List mylist = List();
 
@@ -869,7 +973,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // print(response.data[i]["subject"]);
         // print(GetTicket.fromJson(response.data[i]).assetName);
         print(GetTicket.fromJson(response.data[i]).assetName);
-      }
+      } */
     } catch (e) {
       print(e);
     }
