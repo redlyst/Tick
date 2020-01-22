@@ -1,5 +1,5 @@
-name: ticketing
-description: PATRiA Ticketing.
+name: Ticketing
+description: PATRiA Ticketing System.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   progress_indicators: ^0.1.4
-  flutter_barcode_scanner: ^0.0.9
+  # flutter_barcode_scanner: ^0.0.9
   dio: ^2.1.3
   shimmer: ^1.0.0
 

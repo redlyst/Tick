@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:ticketing/color_pallete.dart' as colorPallete;
+import 'color_pallete.dart' as colorPallete;
 import 'dart:async';
 
 import 'loginscreen.dart';

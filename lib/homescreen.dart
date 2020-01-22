@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:dio/dio.dart';
-import 'package:ticketing/color_pallete.dart';
-import 'package:ticketing/model_ticket.dart';
-import 'package:ticketing/page_view_card.dart';
-import 'package:ticketing/tracking_lines.dart';
+import 'color_pallete.dart';
+import 'model_ticket.dart';
+import 'page_view_card.dart';
+import 'tracking_lines.dart';
 import 'model.dart';
 import 'page_view_card_list_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         label: const Text('Asset Scan'),
         onPressed: () {
-          initPlatformState();
+          // initPlatformState();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -819,7 +819,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
+/*   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -849,7 +849,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     print(barcodeScanRes);
-  }
+  } */
 
   void getTicket() async {
     try {

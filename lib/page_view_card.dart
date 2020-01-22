@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketing/page_view_card_list_tile.dart';
+import 'page_view_card_list_tile.dart';
 
 class PageViewCard extends StatelessWidget {
   @override

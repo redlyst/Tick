@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:ticketing/model.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'model.dart';
 import 'color_pallete.dart' as colorPallete;
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,7 +46,7 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
           ),
           label: const Text('Stock Scan'),
           onPressed: () {
-            initPlatformState();
+            // initPlatformState();
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -581,7 +581,7 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
     );
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
+/*   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -611,7 +611,7 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
     }
 
     print(barcodeScanRes);
-  }
+  } */
 
   void getHttp(String barcodeScan) async {
     try {

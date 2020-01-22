@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticketing/color_pallete.dart';
+import 'color_pallete.dart';
 
 class TrackingLines extends StatelessWidget {
   final int length;
