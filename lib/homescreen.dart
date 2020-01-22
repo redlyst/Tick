@@ -440,6 +440,25 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
+  Widget snackMe(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
+    // Find the Scaffold in the widget tree and use
+    // it to show a SnackBar.
+    // Scaffold.of(context).showSnackBar(snackBar);
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+    return snackBar;
+  }
+
   Widget buildTicket(
       String id,
       String subject,
@@ -455,62 +474,68 @@ class _HomeScreenState extends State<HomeScreen> {
       String respondTime,
       String resolveTime,
       String status) {
-    return Padding(
-      padding: EdgeInsets.only(top: 15, bottom: 15, right: 15),
-      // padding: const EdgeInsets.symmetric(horizontal: 7.0),
-      child: Card(
-        elevation: 0,
-        // color: Color.fromRGBO(64, 122, 255, 1),
-        color: Color(0xFFf0f0f0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  PageViewCardListTile(
-                    title: 'Ticket ID',
-                    content: id,
-                    biggerContent: true,
-                  ),
-                  PageViewCardListTile(title: 'Subject', content: subject),
-                  PageViewCardListTile(
-                      title: 'Reported By', content: reportNrpName),
-                  PageViewCardListTile(
-                      title: 'Department', content: department),
-                  PageViewCardListTile(title: 'Email', content: email),
-                  PageViewCardListTile(title: 'Asset Name', content: assetName),
-                  PageViewCardListTile(title: 'Message', content: message),
-                  PageViewCardListTile(title: 'Priority', content: priority),
-                  PageViewCardListTile(
-                      title: 'Ticket Submit By', content: submitBy),
-                  PageViewCardListTile(title: 'Note', content: note),
-                  PageViewCardListTile(
-                    title: 'Report Date',
-                    content: reportDate,
-                  ),
-                  PageViewCardListTile(
-                    title: 'Respond Time',
-                    content: respondTime,
-                  ),
-                  PageViewCardListTile(
-                    title: 'Resolve Time',
-                    content: resolveTime,
-                  ),
-                  PageViewCardListTile(
-                    title: 'Status',
-                    content: status,
-                  ),
-                ],
-              )
-            ],
+    return GestureDetector(
+      onTap: () {
+        snackMe(_nA);
+      },
+      child: Padding(
+        padding: EdgeInsets.only(top: 15, bottom: 15, right: 15),
+        // padding: const EdgeInsets.symmetric(horizontal: 7.0),
+        child: Card(
+          elevation: 0,
+          // color: Color.fromRGBO(64, 122, 255, 1),
+          color: Color(0xFFf0f0f0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          margin: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    PageViewCardListTile(
+                      title: 'Ticket ID',
+                      content: id,
+                      biggerContent: true,
+                    ),
+                    PageViewCardListTile(title: 'Subject', content: subject),
+                    PageViewCardListTile(
+                        title: 'Reported By', content: reportNrpName),
+                    PageViewCardListTile(
+                        title: 'Department', content: department),
+                    PageViewCardListTile(title: 'Email', content: email),
+                    PageViewCardListTile(
+                        title: 'Asset Name', content: assetName),
+                    PageViewCardListTile(title: 'Message', content: message),
+                    PageViewCardListTile(title: 'Priority', content: priority),
+                    PageViewCardListTile(
+                        title: 'Ticket Submit By', content: submitBy),
+                    PageViewCardListTile(title: 'Note', content: note),
+                    PageViewCardListTile(
+                      title: 'Report Date',
+                      content: reportDate,
+                    ),
+                    PageViewCardListTile(
+                      title: 'Respond Time',
+                      content: respondTime,
+                    ),
+                    PageViewCardListTile(
+                      title: 'Resolve Time',
+                      content: resolveTime,
+                    ),
+                    PageViewCardListTile(
+                      title: 'Status',
+                      content: status,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
