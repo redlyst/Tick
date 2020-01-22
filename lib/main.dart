@@ -6,6 +6,7 @@ import 'dart:async';
 import 'loginscreen.dart';
 import 'homescreen.dart';
 import 'secondhome.dart';
+import 'scanscreen.dart';
 
 void main() => runApp(InitScreen());
 
@@ -26,6 +27,7 @@ class InitScreen extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),
         '/shome': (context) => SecondHomeScreen(),
+        // '/sscreen': (context) => ScanScreen(),
       },
     );
   }

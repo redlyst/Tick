@@ -13,6 +13,7 @@ import 'page_view_card_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'model_t.dart';
 import 'dart:convert';
+import 'scanscreen.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -93,7 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.help, color: Colors.white),
               onPressed: () {
                 // Navigator.pushNamed(context, '/shome');
-                getTicket();
+                // Navigator.pushNamed(context, '/sscreen');
+                // getTicket();
               },
             )
           ],
@@ -308,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // buildTicket(),
 
           buildMenu(context),
-          /* Visibility(
+          /*          Visibility(
             visible: _sResultVisibility,
             child: Padding(
               // padding: const EdgeInsets.only(bottom: 15.0, top: 10),
@@ -345,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-          ),
+          ), */
           Visibility(
             visible: _sResultVisibility,
             child: Padding(
@@ -434,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          buildMenu2(context), */
+          // buildMenu2(context),
         ],
       ),
     ));
@@ -1038,7 +1040,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }); */
 
       setState(() {
-        _sResultVisibility = true;
+        // _sResultVisibility = true;
         // _scanResult = response.data.toString();
         _assetNumber = getData.assetNumber != null ? getData.assetNumber : _nA;
         _assetName = getData.assetName != null ? getData.assetName : _nA;
@@ -1058,6 +1060,28 @@ class _HomeScreenState extends State<HomeScreen> {
         _roomName = getData.roomName != null ? getData.roomName : _nA;
         _locName = getData.locName != null ? getData.locName : _nA;
       });
+
+      // Navigator.pushNamed(context, '/sscreen');
+
+      Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                // new ContaPage(new Color(0xFF66BB6A)),
+                new ScanScreen(
+                    _assetName,
+                    _assetNumber,
+                    _buyDate,
+                    _brandName,
+                    _categoryName,
+                    _categoryNumber,
+                    _locName,
+                    _roomName,
+                    _statusName,
+                    _userDepartment,
+                    _userName,
+                    _userNrp),
+          ));
 
       // ProductList productsList = ProductList.fromJson(jsonResponse);
 
@@ -1113,4 +1137,21 @@ class _HomeScreenState extends State<HomeScreen> {
       print(e);
     }
   }
+}
+
+class ContaPage extends StatefulWidget {
+  ContaPage(this.color);
+  final Color color;
+
+  @override
+  _ContaPageState createState() => _ContaPageState();
+}
+
+class _ContaPageState extends State<ContaPage> {
+  @override
+  Widget build(BuildContext context) => new Scaffold(
+        appBar: new AppBar(
+          backgroundColor: widget.color,
+        ),
+      );
 }
