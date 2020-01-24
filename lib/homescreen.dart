@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.help, color: Colors.white),
               onPressed: () {
-                // Navigator.pushNamed(context, '/shome');
+                Navigator.pushNamed(context, '/shome');
                 // Navigator.pushNamed(context, '/sscreen');
                 // getTicket();
               },
@@ -224,7 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          snackMe("Coming soon!");
+                        },
                       ),
                     ],
                   ),
@@ -309,7 +311,105 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // buildTicket(),
 
+          /* Row(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                color: primaryColor,
+                child: Text('WASDA'),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                color: accentColor,
+                child: Text('WASDW'),
+              )
+            ],
+          ), */
           buildMenu(context),
+          /* Row(
+            children: <Widget>[
+              Card(
+                // height: 120.0,
+                color: primaryColor,
+                child: Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                color: Colors.white.withOpacity(0.1),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  IconData(0xF391,
+                                      fontFamily: CupertinoIcons.iconFont,
+                                      fontPackage:
+                                          CupertinoIcons.iconFontPackage),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                _totalRequest != null
+                                    ? _totalRequest.toString()
+                                    : _nA,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white),
+                              ),
+                              Text(
+                                'Ticket Request',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    // .copyWith(color: Colors.white.withOpacity(0.5)),
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          Expanded(child: SizedBox()),
+                          CupertinoButton(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              'SUBMISSION',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            onPressed: () {
+                              snackMe("Coming soon!");
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ) */
+
           /*          Visibility(
             visible: _sResultVisibility,
             child: Padding(
@@ -348,6 +448,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ), */
+
+          /* 
           Visibility(
             visible: _sResultVisibility,
             child: Padding(
@@ -434,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ),
+          ), */
 
           // buildMenu2(context),
         ],
@@ -444,13 +546,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget snackMe(String message) {
     final snackBar = SnackBar(
-      content: Text(message),
-      action: SnackBarAction(
-        label: 'OK',
-        onPressed: () {
-          // Some code to undo the change.
-        },
+      duration: Duration(seconds: 2),
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
       ),
+      // action: SnackBarAction(
+      //   label: 'OK',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
     );
 
     // Find the Scaffold in the widget tree and use
@@ -722,7 +828,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.initState();
     // _scanResult = 'Please Scan';
-    _scanResult = 'Please Scan';
+    // _scanResult = 'Please Scan';
     // getTicket();
 
     // _assetName = '';

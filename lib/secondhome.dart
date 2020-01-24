@@ -78,200 +78,66 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
   }
 
   Widget buildBody() {
-    return Stack(
-      alignment: AlignmentDirectional.topCenter,
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Text('WASD'),
-          ],
-        )
-/*         Positioned(
-          top: 20.0,
-          left: 0.0,
-          right: 0.0,
-          child: GridView.count(
-            crossAxisCount: 4,
-            mainAxisSpacing: 4.0,
-            crossAxisSpacing: 4.0,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              buildIcon(0, 'Request', context),
-              buildIcon(1, 'Response', context),
-              buildIcon(2, 'Assets', context),
-              buildIcon(3, 'Inventory', context),
-              // _buildGridMenuButton(4, 'Inventory', context),
-            ],
-          ),
-        ), */
-        /*   Positioned(
-          top: 130.0,
-          left: 0.0,
-          right: 0.0,
+    double screenwidth = MediaQuery.of(context).size.width;
+    double boxwidth = screenwidth * 0.4;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
           child: Container(
-              color: colorPallete.accentColor,
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).size.height / 1.8) -
-                  120.0,
-              child: Text('data')
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //   child:
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   mainAxisSize: MainAxisSize.max,
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: <Widget>[
-              // RichText(
-              // textAlign: TextAlign.start,
-              // text: TextSpan(children: [
-              // TextSpan(
-              //   text: 'Welcome! ',
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.w500,
-              //     fontSize: 26.0,
-              //   ),
-              // ),
-              // TextSpan(
-              //   text: 'Ryan',
-              //   style: TextStyle(
-              //     fontSize: 20.0,
-              //   ),
-              // ),
-              // ]),
-              // ),
-              // Row(
-              //   mainAxisSize: MainAxisSize.max,
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: <Widget>[
-              // Column(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: <Widget>[
-              //     SizedBox(
-              //       width: 60.0,
-              //       height: 60.0,
-              //       child: CupertinoButton(
-              //         padding: EdgeInsets.zero,
-              //         borderRadius: BorderRadius.circular(20.0),
-              //         onPressed: () {},
-              //         color: Color(0xFFB42827),
-              //         child: Icon(
-              //           Icons.ac_unit,
-              //           size: 26.0,
-              //         ),
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       height: 8.0,
-              //     ),
-              //     Container(
-              //       width: 60.0,
-              //       height: 20.0,
-              //       child: Center(
-              //         child: Text(
-              //           "Inventory",
-              //           style: Theme.of(context)
-              //               .textTheme
-              //               .caption
-              //               .copyWith(color: Colors.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              // children: <Widget>[
-              // GridView.count(
-              //   crossAxisCount: 1,
-              //   children: <Widget>[
-              //     // buildIcon(0, 'Request', context),
-              //     // buildIcon(1, 'Response', context),
-              //     // buildIcon(2, 'Assets', context),
-              //     // buildIcon(3, 'Inventory', context),
-              //   ],
-              // )
-              // ],
-              // )
-              // Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       GridView.count(
-              //         crossAxisCount: 4,
-              //         mainAxisSpacing: 4.0,
-              //         crossAxisSpacing: 4.0,
-              //         physics: NeverScrollableScrollPhysics(),
-              //         shrinkWrap: true,
-              //         children: [
-              // buildIcon(0, 'Request', context),
-              // buildIcon(1, 'Response', context),
-              // buildIcon(2, 'Assets', context),
-              // buildIcon(3, 'Inventory', context),
-              // _buildGridMenuButton(4, 'Inventory', context),
-              // ],
-              // ),
-              // ])
-              // buildMenu(context)
-              /* SquareButton(
-                          icon: Icon(FontAwesomeIcons.search),
-                          label: 'Lookup',
-                        ),
-                        SquareButton(
-                          icon: Icon(FontAwesomeIcons.userAlt),
-                          label: 'Customer',
-                        ),
-                        SquareButton(
-                          icon: Icon(FontAwesomeIcons.headset),
-                          label: 'Contacts',
-                        ),
-                        SquareButton(
-                          icon: Icon(FontAwesomeIcons.solidComments),
-                          label: 'Message',
-                        ), */
-              //   ],
-              // ),
-              /* Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
+            height: MediaQuery.of(context).size.height / 4,
+            child: Card(
+              color: Color.fromRGBO(64, 122, 255, 1),
+              // color: Colors.white,
+              // elevation: 4.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Container(
-                          width: 7.0,
-                          height: 7.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFB42827),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          'Service Request',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle
-                              .copyWith(color: Colors.white),
-                        ),
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                        /* Icon(
-                            CupertinoIcons.ellipsis,
-                            color: Colors.white,
-                          ), */
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.format_list_bulleted,
+                            size: 30, color: Colors.white),
+                        // Icon(_getIcon(index),
+                        //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
                       ],
                     ),
-                  ), */
-              //   ],
-              // ),
-              // ),
+                  ),
+                  Container(
+                    width: 100,
+                    //margin: EdgeInsets.only(top: 8.0),
+                    // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Request",
+                          // overflow: TextOverflow.ellipsis,
+                          // maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 11.0,
+                            color: Colors.white,
+                            // color: Color.fromRGBO(64, 122, 255, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+            ),
+          ),
         ),
-       */
+        Expanded(
+          child: Card(
+              child:
+                  Container(color: colorPallete.accentColor, child: Text('B'))),
+        ),
       ],
     );
   }
