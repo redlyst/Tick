@@ -5,6 +5,7 @@ import 'model.dart';
 import 'color_pallete.dart' as colorPallete;
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
+import 'color_pallete.dart';
 
 class SecondHomeScreen extends StatefulWidget {
   SecondHomeScreen({Key key}) : super(key: key);
@@ -14,6 +15,8 @@ class SecondHomeScreen extends StatefulWidget {
 
 class _SecondHomeScreenState extends State<SecondHomeScreen> {
   String _scanResult;
+  String _nA = 'Not Available';
+  int _totalRequest;
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -80,63 +83,286 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
   Widget buildBody() {
     double screenwidth = MediaQuery.of(context).size.width;
     double boxwidth = screenwidth * 0.4;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Container(
-            height: MediaQuery.of(context).size.height / 4,
-            child: Card(
-              color: Color.fromRGBO(64, 122, 255, 1),
-              // color: Colors.white,
-              // elevation: 4.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.format_list_bulleted,
-                            size: 30, color: Colors.white),
-                        // Icon(_getIcon(index),
-                        //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                    //margin: EdgeInsets.only(top: 8.0),
-                    // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Request",
-                          // overflow: TextOverflow.ellipsis,
-                          // maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 11.0,
+    return Column(
+      children: <Widget>[
+        Card(
+          // height: 120.0,
+          color: primaryColor,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Container(
+                        width: 45.0,
+                        height: 45.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Colors.white.withOpacity(0.1),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            IconData(0xF391,
+                                fontFamily: CupertinoIcons.iconFont,
+                                fontPackage: CupertinoIcons.iconFontPackage),
                             color: Colors.white,
-                            // color: Color.fromRGBO(64, 122, 255, 1),
                           ),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          _totalRequest != null
+                              ? _totalRequest.toString()
+                              : _nA,
+                          style: Theme.of(context).textTheme.headline.copyWith(
+                              fontWeight: FontWeight.w500, color: Colors.white),
+                        ),
+                        Text(
+                          'Ticket Request',
+                          style: Theme.of(context)
+                              .textTheme
+                              .caption
+                              // .copyWith(color: Colors.white.withOpacity(0.5)),
+                              .copyWith(color: Colors.white),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    /* Expanded(child: SizedBox()),
+                    CupertinoButton(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'SUBMISSION',
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onPressed: () {
+                        // snackMe("Coming soon!");
+                      },
+                    ), */
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
-        Expanded(
-          child: Card(
-              child:
-                  Container(color: colorPallete.accentColor, child: Text('B'))),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                // height: MediaQuery.of(context).size.height / 10,
+                height: 100,
+                child: Card(
+                  color: Color.fromRGBO(64, 122, 255, 1),
+                  // color: Colors.white,
+                  // elevation: 4.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.new_releases,
+                                size: 30, color: Colors.white),
+                            // Icon(_getIcon(index),
+                            //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        //margin: EdgeInsets.only(top: 8.0),
+                        // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Top New",
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                color: Colors.white,
+                                // color: Color.fromRGBO(64, 122, 255, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                // height: MediaQuery.of(context).size.height / 10,
+                height: 100,
+                child: Card(
+                  color: Color.fromRGBO(64, 122, 255, 1),
+                  // color: Colors.white,
+                  // elevation: 4.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.done, size: 30, color: Colors.white),
+                            // Icon(_getIcon(index),
+                            //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        //margin: EdgeInsets.only(top: 8.0),
+                        // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Done",
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                color: Colors.white,
+                                // color: Color.fromRGBO(64, 122, 255, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                // height: MediaQuery.of(context).size.height / 10,
+                height: 100,
+                child: Card(
+                  color: Color.fromRGBO(64, 122, 255, 1),
+                  // color: Colors.white,
+                  // elevation: 4.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.list, size: 30, color: Colors.white),
+                            // Icon(_getIcon(index),
+                            //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        //margin: EdgeInsets.only(top: 8.0),
+                        // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "All",
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                color: Colors.white,
+                                // color: Color.fromRGBO(64, 122, 255, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                // height: MediaQuery.of(context).size.height / 10,
+                height: 100,
+                child: Card(
+                  color: Color.fromRGBO(64, 122, 255, 1),
+                  // color: Colors.white,
+                  // elevation: 4.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.report, size: 30, color: Colors.white),
+                            // Icon(_getIcon(index),
+                            //     size: 30, color: Color.fromRGBO(64, 122, 255, 1)),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        //margin: EdgeInsets.only(top: 8.0),
+                        // padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Available Soon",
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                color: Colors.white,
+                                // color: Color.fromRGBO(64, 122, 255, 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

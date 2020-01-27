@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'model_t.dart';
 import 'dart:convert';
 import 'scanscreen.dart';
+import 'searchscreen.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -225,7 +226,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onPressed: () {
-                          snackMe("Coming soon!");
+                          // snackMe("Coming soon!");
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      // new ContaPage(new Color(0xFF66BB6A)),
+                                      new SearchScreen()));
                         },
                       ),
                     ],
@@ -669,8 +676,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     _buildGridMenuButton(0, 'Request', context),
                     _buildGridMenuButton(1, 'Response', context),
-                    _buildGridMenuButton(2, 'Assets', context),
-                    _buildGridMenuButton(3, 'Inventory', context),
+                    _buildGridMenuButton(2, 'Available Soon', context),
+                    _buildGridMenuButton(3, 'Available Soon', context),
                     // _buildGridMenuButton(4, 'Inventory', context),
                   ],
                 ),
