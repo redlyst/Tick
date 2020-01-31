@@ -31,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _scanResult;
   String _assetName = '';
+  String _roomId = '';
+  String _assetId = '';
   String _assetNumber = '';
   String _buyDate = '';
   String _brandName = '';
@@ -45,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _sResultVisibility = false;
   String _nA = 'Not Available';
   int _totalRequest;
+  int _totalTicket;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -94,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.help, color: Colors.white),
               onPressed: () {
+                // updateRoom(_assetId, '5');
                 Navigator.pushNamed(context, '/shome');
                 // Navigator.pushNamed(context, '/sscreen');
                 // getTicket();
@@ -193,8 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            _totalRequest != null
-                                ? _totalRequest.toString()
+                            _totalTicket != null
+                                ? _totalTicket.toString()
                                 : _nA,
                             style: Theme.of(context)
                                 .textTheme
@@ -307,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: TrackingLines(
-                      length: 5,
+                      length: _totalRequest != null ? _totalRequest : 1,
                       currentIndex: _currentIndex,
                     ),
                   ),
@@ -829,6 +833,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getTicket();
+    getTotalTicket();
     _pageController.addListener(() {
       setState(() => _currentIndex = _pageController.page.round());
     });
@@ -1069,10 +1074,89 @@ class _HomeScreenState extends State<HomeScreen> {
     return list;
   }
 
+  void getTotalTicket() async {
+    try {
+      Response response =
+          await Dio().get("http://10.2.49.12/it_is/Api/getTicket");
+      setState(() {
+        _totalTicket = response.data.length;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /* 
+  void setActionButton(String roomId, String assetId) async {
+    FormData formData = FormData.from({
+      "id": widget.list[widget.index]['id'],
+      "cat": _role.toUpperCase(),
+      "status": status,
+      "user": _username,
+      // "comment": commentController.text
+      "comment": comment,
+    });
+    Response response = await Dio()
+        .post("http://10.48.10.116/integrasi/Api/setData", data: formData);
+
+    // print('-----------------REJECT');
+    // print(widget.list[widget.index]['sn']);
+    // print(setrole.toUpperCase());
+    // print(_username);
+    print(response.data);
+    // setState(() {
+    //   tvCommentVisibility = false;
+    //   tvApproveVisibility = false;
+    //   commentController.clear();
+    //   approveController.clear();
+
+    //   getHttp();
+    // });
+    // getHttp();
+  }
+
+  void updateRoom(String roomId, String assetId) async {
+    // try {
+    Response response = await Dio()
+        // .get("10.2.49.12/it_is/Api/updateRoom/" + assetId + "/" + roomId);
+        .get("10.2.49.12/it_is/Api/updateRoom/8/7");
+    // print(response.data);
+
+    /*  FormData formData = FormData.from({
+      "room_id": roomId,
+    });
+    Response response = await Dio()
+        .post("10.2.49.12/it_is/Api/updateRoom/"+ assetId , data: formData); */
+
+    /* Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                // new ContaPage(new Color(0xFF66BB6A)),
+                new ScanScreen(
+                    _assetName,
+                    _assetNumber,
+                    _buyDate,
+                    _brandName,
+                    _categoryName,
+                    _categoryNumber,
+                    _locName,
+                    _roomName,
+                    _statusName,
+                    _userDepartment,
+                    _userName,
+                    _userNrp),
+          )); */
+
+    // } catch (e) {
+    //   print(e);
+    // }
+  } */
+
   void getTicket() async {
     try {
       Response response =
-          await Dio().get("http://10.2.49.12/it_is/Api/getLastTicket/");
+          await Dio().get("http://10.2.49.12/it_is/Api/getTicket/5");
       // final getData = GetData.fromJson(response.data[0]);
       // final getData = GetTicket.fromJson(response.data);
 
@@ -1172,6 +1256,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _statusName = getData.statusName != null ? getData.statusName : _nA;
         _roomName = getData.roomName != null ? getData.roomName : _nA;
         _locName = getData.locName != null ? getData.locName : _nA;
+        _roomId = getData.roomId != null ? getData.roomId : _nA;
+        _assetId = getData.assetId != null ? getData.assetId : _nA;
       });
 
       // Navigator.pushNamed(context, '/sscreen');
@@ -1193,7 +1279,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     _statusName,
                     _userDepartment,
                     _userName,
-                    _userNrp),
+                    _userNrp,
+                    _roomId,
+                    _assetId),
           ));
 
       // ProductList productsList = ProductList.fromJson(jsonResponse);

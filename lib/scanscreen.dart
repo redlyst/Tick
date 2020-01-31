@@ -21,6 +21,8 @@ class ScanScreen extends StatefulWidget {
       this._userDepartment,
       this._userName,
       this._userNrp,
+      this._roomId,
+      this._assetid,
       {Key key})
       : super(key: key);
   // final Color color;
@@ -37,12 +39,16 @@ class ScanScreen extends StatefulWidget {
   final String _statusName;
   final String _roomName;
   final String _locName;
+  final String _roomId;
+  final String _assetid;
 
   @override
   _ScanScreenState createState() => _ScanScreenState();
 }
 
 class _ScanScreenState extends State<ScanScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   String _scanResult;
   String _assetName = '';
   String _assetNumber = '';
@@ -56,23 +62,28 @@ class _ScanScreenState extends State<ScanScreen> {
   String _statusName = '';
   String _roomName = '';
   String _locName = '';
+  String _roomId = '';
+  String _assetId = '';
   bool _sResultVisibility = false;
   String _nA = 'Not Available';
   int _totalRequest;
+  String dropdownValue;
 
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
+    double screenheight = MediaQuery.of(context).size.height;
     double boxwidth = screenwidth * 0.4;
 
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Scan Result"),
         ),
         body: Container(
           width: screenwidth,
-          height: screenwidth,
+          height: 800,
           child: Padding(
             padding: EdgeInsets.all(15),
             // padding: const EdgeInsets.symmetric(horizontal: 7.0),
@@ -130,32 +141,60 @@ class _ScanScreenState extends State<ScanScreen> {
                       title: 'Location',
                       content: widget._locName,
                     ),
-/*                     SizedBox(
-                        child: CupertinoButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text(
-                                'CSC check',
-                                style: TextStyle(
-                                  color: Color(0xFFB42827),
-                                ),
+                    SizedBox(
+                      child: CupertinoButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text(
+                              'Update',
+                              style: TextStyle(
+                                color: Color(0xFFB42827),
                               ),
-                              Expanded(child: SizedBox()),
-                              RotatedBox(
-                                quarterTurns: 3,
-                                child: Icon(
-                                  CupertinoIcons.down_arrow,
-                                  color: Color(0xFFB42827),
-                                ),
+                            ),
+                            Expanded(child: SizedBox()),
+                            RotatedBox(
+                              quarterTurns: 3,
+                              child: Icon(
+                                CupertinoIcons.down_arrow,
+                                color: Color(0xFFB42827),
                               ),
-                            ],
-                          ),
-                          color: Colors.redAccent.withOpacity(0.3),
-                          onPressed: () {},
+                            ),
+                          ],
                         ),
-                      ) */
+                        color: Colors.redAccent.withOpacity(0.3),
+                        onPressed: () {
+                          updateRoom(_assetId, '5');
+
+                          snackMe("Coming soon!");
+                        },
+                      ),
+                    ),
+
+                    /* DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                        });
+                      },
+                      items: <String>['One', 'Two', 'Free', 'Four']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ) */
                   ],
                 ),
               ),
@@ -164,5 +203,66 @@ class _ScanScreenState extends State<ScanScreen> {
         ),
       ),
     );
+  }
+
+  Widget snackMe(String message) {
+    final snackBar = SnackBar(
+      duration: Duration(seconds: 2),
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+      ),
+      // action: SnackBarAction(
+      //   label: 'OK',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the Scaffold in the widget tree and use
+    // it to show a SnackBar.
+    // Scaffold.of(context).showSnackBar(snackBar);
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+    return snackBar;
+  }
+
+  void updateRoom(String roomId, String assetId) async {
+    // try {
+    Response response = await Dio()
+        // .get("10.2.49.12/it_is/Api/updateRoom/" + assetId + "/" + roomId);
+        .get("http://10.2.49.12/it_is/Api/updateRoom/8/7");
+    // print(response.data);
+
+    /*  FormData formData = FormData.from({
+      "room_id": roomId,
+    });
+    Response response = await Dio()
+        .post("10.2.49.12/it_is/Api/updateRoom/"+ assetId , data: formData); */
+
+    /* Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                // new ContaPage(new Color(0xFF66BB6A)),
+                new ScanScreen(
+                    _assetName,
+                    _assetNumber,
+                    _buyDate,
+                    _brandName,
+                    _categoryName,
+                    _categoryNumber,
+                    _locName,
+                    _roomName,
+                    _statusName,
+                    _userDepartment,
+                    _userName,
+                    _userNrp),
+          )); */
+
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 }

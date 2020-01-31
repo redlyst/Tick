@@ -14,7 +14,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List names = new List();
   List filteredNames = new List();
   Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Serial Number Search');
+  Widget _appBarTitle = new Text('Ticket Request');
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
         );
       } else {
         this._searchIcon = new Icon(Icons.search);
-        this._appBarTitle = new Text('Serial Number Search');
+        this._appBarTitle = new Text('Ticket Request');
         filteredNames = names;
         controller.clear();
       }
@@ -53,32 +53,32 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          autofocus: true,
-          style: TextStyle(color: Colors.white),
-          controller: controller,
-          decoration: new InputDecoration(
-              border: InputBorder.none,
-              hintStyle: TextStyle(color: Colors.white),
-              // prefixIcon: new Icon(Icons.search),
-              hintText: 'Search by SN or CN ...'),
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                controller.clear();
-              })
-        ],
-
+        // title: TextField(
+        // autofocus: true,
+        // style: TextStyle(color: Colors.white),
+        // controller: controller,
+        // decoration: new InputDecoration(
+        //     border: InputBorder.none,
+        //     hintStyle: TextStyle(color: Colors.white),
+        //     // prefixIcon: new Icon(Icons.search),
+        //     hintText: 'Search by SN or CN ...'),
+        // ),
         // actions: <Widget>[
         //   IconButton(
-        //       icon: _searchIcon,
+        //       icon: Icon(Icons.close),
         //       onPressed: () {
-        //         _searchPressed();
+        //         controller.clear();
         //       })
         // ],
-        // title: _appBarTitle,
+
+        actions: <Widget>[
+          IconButton(
+              icon: _searchIcon,
+              onPressed: () {
+                _searchPressed();
+              })
+        ],
+        title: _appBarTitle,
       ),
       body: SafeArea(
         child: FutureBuilder<List>(
@@ -103,7 +103,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 //             ))),
                                 child: new Card(
                                   // margin: EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                  elevation: 0.5,
+                                  // elevation: 0.5,
                                   child: new ListTile(
                                     // contentPadding: EdgeInsets.all(10),
                                     title: Column(
@@ -111,8 +111,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                           CrossAxisAlignment.start,
                                       verticalDirection: VerticalDirection.up,
                                       children: <Widget>[
-                                        Text(snapshot.data[i]
-                                            ['reporter_name'.toLowerCase()]),
+                                        Text(snapshot.data[i]['reporter_name']),
+                                        Text(
+                                          snapshot.data[i]['message'],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ],
                                     ),
                                   ),
