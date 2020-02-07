@@ -6,6 +6,7 @@ import 'color_pallete.dart' as colorPallete;
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'page_view_card_list_tile.dart';
+import 'package:http/http.dart' as http;
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen(
@@ -83,7 +84,7 @@ class _ScanScreenState extends State<ScanScreen> {
         ),
         body: Container(
           width: screenwidth,
-          height: 800,
+          height: 600,
           child: Padding(
             padding: EdgeInsets.all(15),
             // padding: const EdgeInsets.symmetric(horizontal: 7.0),
@@ -165,9 +166,9 @@ class _ScanScreenState extends State<ScanScreen> {
                         ),
                         color: Colors.redAccent.withOpacity(0.3),
                         onPressed: () {
-                          updateRoom(_assetId, '5');
+                          addHistory();
 
-                          snackMe("Coming soon!");
+                          // snackMe("Coming soon!");
                         },
                       ),
                     ),
@@ -228,41 +229,28 @@ class _ScanScreenState extends State<ScanScreen> {
     return snackBar;
   }
 
-  void updateRoom(String roomId, String assetId) async {
-    // try {
-    Response response = await Dio()
-        // .get("10.2.49.12/it_is/Api/updateRoom/" + assetId + "/" + roomId);
-        .get("http://10.2.49.12/it_is/Api/updateRoom/8/7");
-    // print(response.data);
+  void addHistory() async {
+    /* try {
+      Dio dio = new Dio();
+      Response response = await dio.get(
+          "http://10.2.49.12/it_is/Api/addNewHistory/8/5/1612075/Digitalization Function/DEWI ANGGRAINI/6");
+      print(response.data.toString());
+    } catch (e) {
+      print(e);
+    } */
 
-    /*  FormData formData = FormData.from({
-      "room_id": roomId,
-    });
-    Response response = await Dio()
-        .post("10.2.49.12/it_is/Api/updateRoom/"+ assetId , data: formData); */
+  var url = "http://10.2.49.12/it_is/Api/addNewHistory/8/5/1612075/Digitalization Function/DEWI ANGGRAINI/6";
 
-    /* Navigator.push(
-          context,
-          new MaterialPageRoute(
-            builder: (BuildContext context) =>
-                // new ContaPage(new Color(0xFF66BB6A)),
-                new ScanScreen(
-                    _assetName,
-                    _assetNumber,
-                    _buyDate,
-                    _brandName,
-                    _categoryName,
-                    _categoryNumber,
-                    _locName,
-                    _roomName,
-                    _statusName,
-                    _userDepartment,
-                    _userName,
-                    _userNrp),
-          )); */
+  var response = await http.get(url);
 
-    // } catch (e) {
-    //   print(e);
-    // }
+  if (response.statusCode == 200) {
+    // var jsonResponse = convert.jsonDecode(response.body);
+    // var itemCount = jsonResponse['totalItems'];
+    // print('Number of books about http: $itemCount.');
+    print('Request failed with status: ${response.statusCode}.');
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+
   }
 }
