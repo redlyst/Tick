@@ -30,20 +30,26 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   String _scanResult;
-  String _assetName = '';
-  String _roomId = '';
+
   String _assetId = '';
   String _assetNumber = '';
-  String _buyDate = '';
+  String _assetName = '';
+  String _assetDateBuyed = '';
+  // String _assetIdCategory = '';
+  // String _brandId = '';
   String _brandName = '';
-  String _categoryName = '';
-  String _categoryNumber = '';
+  String _assetCategoryName = '';
+  String _assetCategoryNumber = '';
   String _userName = '';
   String _userNrp = '';
-  String _userDepartment = '';
+  String _userDept = '';
+  String _statusId = '';
   String _statusName = '';
+  String _roomId = '';
   String _roomName = '';
+  String _locId = '';
   String _locName = '';
+
   bool _sResultVisibility = false;
   String _nA = 'Not Available';
   int _totalRequest;
@@ -284,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           Container(
             // height: MediaQuery.of(context).size.height / 1.8,
-            height: 550,
+            height: 670,
             child: Stack(
               children: <Widget>[
                 Padding(
@@ -1224,7 +1230,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Response response = await Dio()
           .get("http://10.2.49.12/it_is/Api/scanAsset/" + barcodeScan);
       // final getData = GetData.fromJson(response.data[0]);
-      final getData = GetData.fromJson(response.data);
+      final getData = ScanAsset.fromJson(response.data);
 
       /*     setState(() {
         _assetNumber =
@@ -1239,25 +1245,27 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         // _sResultVisibility = true;
         // _scanResult = response.data.toString();
+
+        _assetId = getData.assetId != null ? getData.assetId : _nA;
         _assetNumber = getData.assetNumber != null ? getData.assetNumber : _nA;
         _assetName = getData.assetName != null ? getData.assetName : _nA;
-        _buyDate = getData.assetDateBuyed.toString() != null
+        _assetDateBuyed = getData.assetDateBuyed.toString() != null
             ? getData.assetDateBuyed.toString()
             : _nA;
         _brandName = getData.brandName != null ? getData.brandName : _nA;
-        _categoryName =
+        _assetCategoryName =
             getData.assetCategoryName != null ? getData.assetCategoryName : _nA;
-        _categoryNumber = getData.assetCategoryNumber != null
+        _assetCategoryNumber = getData.assetCategoryNumber != null
             ? getData.assetCategoryNumber
             : _nA;
         _userName = getData.userName != null ? getData.userName : _nA;
         _userNrp = getData.userNrp != null ? getData.userNrp : _nA;
-        _userDepartment = getData.userDept != null ? getData.userDept : _nA;
+        _userDept = getData.userDept != null ? getData.userDept : _nA;
+        _statusId = getData.statusId != null ? getData.statusId : _nA;
         _statusName = getData.statusName != null ? getData.statusName : _nA;
+        _roomId = getData.roomId != null ? getData.roomId : _nA;
         _roomName = getData.roomName != null ? getData.roomName : _nA;
         _locName = getData.locName != null ? getData.locName : _nA;
-        _roomId = getData.roomId != null ? getData.roomId : _nA;
-        _assetId = getData.assetId != null ? getData.assetId : _nA;
       });
 
       // Navigator.pushNamed(context, '/sscreen');
@@ -1268,20 +1276,22 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context) =>
                 // new ContaPage(new Color(0xFF66BB6A)),
                 new ScanScreen(
-                    _assetName,
-                    _assetNumber,
-                    _buyDate,
-                    _brandName,
-                    _categoryName,
-                    _categoryNumber,
-                    _locName,
-                    _roomName,
-                    _statusName,
-                    _userDepartment,
-                    _userName,
-                    _userNrp,
-                    _roomId,
-                    _assetId),
+              _assetId,
+              _assetNumber,
+              _assetName,
+              _assetDateBuyed,
+              _brandName,
+              _assetCategoryName,
+              _assetCategoryNumber,
+              _userName,
+              _userNrp,
+              _userDept,
+              _statusId,
+              _statusName,
+              _roomId,
+              _roomName,
+              _locName,
+            ),
           ));
 
       // ProductList productsList = ProductList.fromJson(jsonResponse);

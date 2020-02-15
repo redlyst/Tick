@@ -7,41 +7,44 @@ import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'page_view_card_list_tile.dart';
 import 'package:http/http.dart' as http;
+import 'updatescreen.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen(
-      this._assetName,
+      this._assetId,
       this._assetNumber,
-      this._buyDate,
+      this._assetName,
+      this._assetBuyDate,
       this._brandName,
-      this._categoryName,
+      this._assetCategoryName,
       this._categoryNumber,
-      this._locName,
-      this._roomName,
-      this._statusName,
-      this._userDepartment,
       this._userName,
       this._userNrp,
+      this._userDept,
+      this._statusId,
+      this._statusName,
       this._roomId,
-      this._assetid,
+      this._roomName,
+      this._locName,
       {Key key})
       : super(key: key);
   // final Color color;
   //  final String _scanResult;
-  final String _assetName;
+  final String _assetId;
   final String _assetNumber;
-  final String _buyDate;
+  final String _assetName;
+  final String _assetBuyDate;
   final String _brandName;
-  final String _categoryName;
+  final String _assetCategoryName;
   final String _categoryNumber;
   final String _userName;
   final String _userNrp;
-  final String _userDepartment;
+  final String _userDept;
+  final String _statusId;
   final String _statusName;
+  final String _roomId;
   final String _roomName;
   final String _locName;
-  final String _roomId;
-  final String _assetid;
 
   @override
   _ScanScreenState createState() => _ScanScreenState();
@@ -50,25 +53,34 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  String _scanResult;
-  String _assetName = '';
-  String _assetNumber = '';
-  String _buyDate = '';
-  String _brandName = '';
-  String _categoryName = '';
-  String _categoryNumber = '';
-  String _userName = '';
-  String _userNrp = '';
-  String _userDepartment = '';
-  String _statusName = '';
-  String _roomName = '';
-  String _locName = '';
-  String _roomId = '';
-  String _assetId = '';
-  bool _sResultVisibility = false;
+  // String _scanResult;
+  // String _categoryNumber;
+
+  String _assetId;
+  String _assetNumber;
+  String _assetName;
+  String _assetBuyDate;
+  String _brandName;
+  String _assetCategoryName;
+  String _userName;
+  String _userNrp;
+  String _userDept;
+  String _statusId;
+  String _statusName;
+  String _roomId;
+  String _roomName;
+  String _locName;
+
+  // bool _sResultVisibility = false;
   String _nA = 'Not Available';
-  int _totalRequest;
-  String dropdownValue;
+  // int _totalRequest;
+  // String dropdownValue;
+
+  TextEditingController _controllerDept = TextEditingController();
+  TextEditingController _controllerName = TextEditingController();
+
+  bool _formView = true;
+  bool _formUpdate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +112,7 @@ class _ScanScreenState extends State<ScanScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     // Container(
                     //   height: 400,
@@ -114,88 +126,213 @@ class _ScanScreenState extends State<ScanScreen> {
                     //   ),
                     //   // width: 200,
                     // )
-                    PageViewCardListTile(
-                      title: 'Asset Number',
-                      content: widget._assetNumber,
-                      biggerContent: true,
-                    ),
-                    PageViewCardListTile(
-                        title: 'Asset Name', content: widget._assetName),
-                    PageViewCardListTile(
-                        title: 'Buy Date', content: widget._buyDate),
-                    PageViewCardListTile(
-                        title: 'Brand', content: widget._brandName),
-                    PageViewCardListTile(
-                        title: 'Category', content: widget._categoryName),
-                    PageViewCardListTile(
-                        title: 'User', content: widget._userName),
-                    PageViewCardListTile(
-                        title: 'User NRP', content: widget._userNrp),
-                    PageViewCardListTile(
-                        title: 'User Department',
-                        content: widget._userDepartment),
-                    PageViewCardListTile(
-                        title: 'Status', content: widget._statusName),
-                    PageViewCardListTile(
-                        title: 'Room', content: widget._roomName),
-                    PageViewCardListTile(
-                      title: 'Location',
-                      content: widget._locName,
-                    ),
-                    SizedBox(
-                      child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Text(
-                              'Update',
-                              style: TextStyle(
-                                color: Color(0xFFB42827),
+
+                    Visibility(
+                      visible: _formView,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          PageViewCardListTile(
+                            title: 'Asset Number',
+                            content: _assetNumber,
+                            biggerContent: true,
+                          ),
+                          PageViewCardListTile(
+                              title: 'Asset Name',
+                              content: _assetName.toUpperCase()),
+                          PageViewCardListTile(
+                              title: 'Buy Date', content: _assetBuyDate),
+                          PageViewCardListTile(
+                              title: 'Brand', content: _brandName),
+                          PageViewCardListTile(
+                              title: 'Category', content: _assetCategoryName),
+                          PageViewCardListTile(
+                              title: 'User', content: _userName),
+                          PageViewCardListTile(
+                              title: 'User Department', content: _userDept),
+                          PageViewCardListTile(
+                              title: 'Status',
+                              content: _statusName.toUpperCase()),
+                          PageViewCardListTile(
+                              title: 'Room', content: _roomName),
+                          PageViewCardListTile(
+                            title: 'Location',
+                            content: _locName.toUpperCase(),
+                          ),
+                          SizedBox(
+                            child: CupertinoButton(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Text(
+                                    'Update',
+                                    style: TextStyle(
+                                      color: Color(0xff0080ff),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  RotatedBox(
+                                    quarterTurns: 3,
+                                    child: Icon(
+                                      CupertinoIcons.down_arrow,
+                                      color: Color(0xff0080ff),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              color: Color(0xff6ab5ff).withOpacity(0.3),
+                              onPressed: () {
+                                setState(() {
+                                  _formView = false;
+                                  _formUpdate = true;
+                                  _controllerName.text = _userName;
+                                  _controllerDept.text = _userDept;
+                                });
+                                /* Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          // new ContaPage(new Color(0xFF66BB6A)),
+                                          new UpdateScreen(),
+                                    )); */
+                                // addHistory();
+
+                                // snackMe("Coming soon!");
+                              },
                             ),
-                            Expanded(child: SizedBox()),
-                            RotatedBox(
-                              quarterTurns: 3,
-                              child: Icon(
-                                CupertinoIcons.down_arrow,
-                                color: Color(0xFFB42827),
-                              ),
-                            ),
-                          ],
+                          ),
+
+                          /* DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
                         ),
-                        color: Colors.redAccent.withOpacity(0.3),
-                        onPressed: () {
-                          addHistory();
-
-                          // snackMe("Coming soon!");
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
                         },
+                        items: <String>['One', 'Two', 'Free', 'Four']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ) */
+                        ],
                       ),
                     ),
+                    Visibility(
+                      visible: _formUpdate,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          PageViewCardListTile(
+                            title: 'Asset Number',
+                            content: _assetNumber,
+                            biggerContent: true,
+                          ),
+                          PageViewCardListTile(
+                              title: 'Asset Name',
+                              content: _assetName.toUpperCase()),
+                          PageViewCardListTile(
+                              title: 'Buy Date', content: _assetBuyDate),
+                          PageViewCardListTile(
+                              title: 'Brand', content: _brandName),
+                          PageViewCardListTile(
+                              title: 'Category', content: _assetCategoryName),
+                          InkWell(
+                            onTap: () {
+                              snackMe(_userName);
+                            },
+                            child: TextField(
+                              enabled: false,
+                              controller: _controllerName,
+                              autofocus: false,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'User',
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              snackMe(_userDept);
+                            },
+                            child: TextField(
+                              enabled: false,
+                              controller: _controllerDept,
+                              autofocus: false,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'User Department',
+                              ),
+                            ),
+                          ),
+                          PageViewCardListTile(
+                              title: 'Status',
+                              content: _statusName.toUpperCase()),
+                          PageViewCardListTile(
+                              title: 'Room', content: _roomName),
+                          PageViewCardListTile(
+                            title: 'Location',
+                            content: _locName.toUpperCase(),
+                          ),
+                          SizedBox(
+                            child: CupertinoButton(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Text(
+                                    'Update Now',
+                                    style: TextStyle(
+                                      color: Color(0xff0080ff),
+                                    ),
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  RotatedBox(
+                                    quarterTurns: 3,
+                                    child: Icon(
+                                      CupertinoIcons.down_arrow,
+                                      color: Color(0xff0080ff),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              color: Color(0xff6ab5ff).withOpacity(0.3),
+                              onPressed: () {
+                                setState(() {
+                                  _formView = true;
+                                  _formUpdate = false;
+                                });
+                                /*  Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                // new ContaPage(new Color(0xFF66BB6A)),
+                new UpdateScreen(),
+          )); */
+                                // addHistory();
 
-                    /* DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                                // snackMe("Coming soon!");
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
-                      items: <String>['One', 'Two', 'Free', 'Four']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ) */
+                    )
                   ],
                 ),
               ),
@@ -205,6 +342,23 @@ class _ScanScreenState extends State<ScanScreen> {
       ),
     );
   }
+
+/*   Widget textTap() {
+    return InkWell(
+      onTap: () {
+        snackMe(widget._userName);
+      },
+      child: TextField(
+        enabled: false,
+        controller: _controller,
+        autofocus: false,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'User',
+        ),
+      ),
+    );
+  } */
 
   Widget snackMe(String message) {
     final snackBar = SnackBar(
@@ -239,18 +393,37 @@ class _ScanScreenState extends State<ScanScreen> {
       print(e);
     } */
 
-  var url = "http://10.2.49.12/it_is/Api/addNewHistory/8/5/1612075/Digitalization Function/DEWI ANGGRAINI/6";
+    var url =
+        "http://10.2.49.12/it_is/Api/addNewHistory/8/5/1612075/Digitalization Function/DEWI ANGGRAINI/6";
 
-  var response = await http.get(url);
+    var response = await http.get(url);
 
-  if (response.statusCode == 200) {
-    // var jsonResponse = convert.jsonDecode(response.body);
-    // var itemCount = jsonResponse['totalItems'];
-    // print('Number of books about http: $itemCount.');
-    print('Request failed with status: ${response.statusCode}.');
-  } else {
-    print('Request failed with status: ${response.statusCode}.');
+    if (response.statusCode == 200) {
+      // var jsonResponse = convert.jsonDecode(response.body);
+      // var itemCount = jsonResponse['totalItems'];
+      // print('Number of books about http: $itemCount.');
+      print('Request succes with status: ${response.statusCode}.');
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
   }
 
+  @override
+  void initState() {
+    _roomId = widget._roomId;
+    _assetId = widget._assetId;
+    _assetNumber = widget._assetNumber;
+    _assetName = widget._assetName;
+    _assetBuyDate = widget._assetBuyDate;
+    _brandName = widget._brandName;
+    _assetCategoryName = widget._assetCategoryName;
+    _userName = widget._userName;
+    _userNrp = widget._userNrp;
+    _userDept = widget._userDept;
+    _statusId = widget._statusId;
+    _statusName = widget._statusName;
+    _roomName = widget._roomName;
+    _locName = widget._locName;
+    super.initState();
   }
 }

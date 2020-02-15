@@ -37,6 +37,9 @@ class PageViewCardListTile extends StatelessWidget {
                   .subtitle
                   .merge(TextStyle(color: Color(0xff42404d))),
         ),
+        SizedBox(
+          height: 10.0,
+        ),
       ],
     );
   }

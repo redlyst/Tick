@@ -725,7 +725,7 @@ class _SecondHomeScreenState extends State<SecondHomeScreen> {
 
       Response response = await Dio()
           .get("http://10.2.49.12/it_is/Api/getAsset/" + barcodeScan);
-      final getData = GetData.fromJson(response.data[0]);
+      final getData = ScanAsset.fromJson(response.data[0]);
 
       setState(() {
         _scanResult = response.data.toString();

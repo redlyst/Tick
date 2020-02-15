@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final getData = getDataFromJson(jsonString);
+//     final scanAsset = scanAssetFromJson(jsonString);
 
 import 'dart:convert';
 
-GetData getDataFromJson(String str) => GetData.fromJson(json.decode(str));
+ScanAsset scanAssetFromJson(String str) => ScanAsset.fromJson(json.decode(str));
 
-String getDataToJson(GetData data) => json.encode(data.toJson());
+String scanAssetToJson(ScanAsset data) => json.encode(data.toJson());
 
-class GetData {
+class ScanAsset {
   String assetId;
   String assetNumber;
   String assetName;
@@ -18,16 +18,17 @@ class GetData {
   String brandName;
   String assetCategoryName;
   String assetCategoryNumber;
-  dynamic userName;
-  dynamic userNrp;
-  dynamic userDept;
-  dynamic statusName;
-  dynamic roomId;
-  dynamic roomName;
-  dynamic locId;
-  dynamic locName;
+  String userName;
+  String userNrp;
+  String userDept;
+  String statusId;
+  String statusName;
+  String roomId;
+  String roomName;
+  String locId;
+  String locName;
 
-  GetData({
+  ScanAsset({
     this.assetId,
     this.assetNumber,
     this.assetName,
@@ -40,6 +41,7 @@ class GetData {
     this.userName,
     this.userNrp,
     this.userDept,
+    this.statusId,
     this.statusName,
     this.roomId,
     this.roomName,
@@ -47,7 +49,7 @@ class GetData {
     this.locName,
   });
 
-  factory GetData.fromJson(Map<String, dynamic> json) => GetData(
+  factory ScanAsset.fromJson(Map<String, dynamic> json) => ScanAsset(
         assetId: json["asset_id"],
         assetNumber: json["asset_number"],
         assetName: json["asset_name"],
@@ -60,6 +62,7 @@ class GetData {
         userName: json["user_name"],
         userNrp: json["user_nrp"],
         userDept: json["user_dept"],
+        statusId: json["status_id"],
         statusName: json["status_name"],
         roomId: json["room_id"],
         roomName: json["room_name"],
@@ -81,6 +84,7 @@ class GetData {
         "user_name": userName,
         "user_nrp": userNrp,
         "user_dept": userDept,
+        "status_id": statusId,
         "status_name": statusName,
         "room_id": roomId,
         "room_name": roomName,
