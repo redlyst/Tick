@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'page_view_card_list_tile.dart';
 import 'package:http/http.dart' as http;
 import 'updatescreen.dart';
+import 'statusscreen.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen(
@@ -78,6 +79,8 @@ class _ScanScreenState extends State<ScanScreen> {
 
   TextEditingController _controllerDept = TextEditingController();
   TextEditingController _controllerName = TextEditingController();
+  TextEditingController _controllerRoom = TextEditingController();
+  TextEditingController _controllerStatus = TextEditingController();
 
   bool _formView = true;
   bool _formUpdate = false;
@@ -96,7 +99,7 @@ class _ScanScreenState extends State<ScanScreen> {
         ),
         body: Container(
           width: screenwidth,
-          height: 600,
+          height: screenheight,
           child: Padding(
             padding: EdgeInsets.all(15),
             // padding: const EdgeInsets.symmetric(horizontal: 7.0),
@@ -127,40 +130,132 @@ class _ScanScreenState extends State<ScanScreen> {
                     //   // width: 200,
                     // )
 
-                    Visibility(
-                      visible: _formView,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          PageViewCardListTile(
-                            title: 'Asset Number',
-                            content: _assetNumber,
-                            biggerContent: true,
-                          ),
-                          PageViewCardListTile(
-                              title: 'Asset Name',
-                              content: _assetName.toUpperCase()),
-                          PageViewCardListTile(
-                              title: 'Buy Date', content: _assetBuyDate),
-                          PageViewCardListTile(
-                              title: 'Brand', content: _brandName),
-                          PageViewCardListTile(
-                              title: 'Category', content: _assetCategoryName),
-                          PageViewCardListTile(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        PageViewCardListTile(
+                          title: 'Asset Number',
+                          content: _assetNumber,
+                          biggerContent: true,
+                        ),
+                        PageViewCardListTile(
+                            title: 'Asset Name',
+                            content: _assetName.toUpperCase()),
+                        PageViewCardListTile(
+                            title: 'Buy Date', content: _assetBuyDate),
+                        PageViewCardListTile(
+                            title: 'Brand', content: _brandName),
+                        PageViewCardListTile(
+                            title: 'Category', content: _assetCategoryName),
+                        Visibility(
+                          visible: _formView,
+                          child: PageViewCardListTile(
                               title: 'User', content: _userName),
-                          PageViewCardListTile(
+                        ),
+                        Visibility(
+                          visible: _formUpdate,
+                          child: InkWell(
+                            onTap: () {
+                              snackMe(_userName);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: TextField(
+                                enabled: false,
+                                controller: _controllerName,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'User',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: _formView,
+                          child: PageViewCardListTile(
                               title: 'User Department', content: _userDept),
-                          PageViewCardListTile(
+                        ),
+                        Visibility(
+                          visible: _formUpdate,
+                          child: InkWell(
+                            onTap: () {
+                              snackMe(_userDept);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: TextField(
+                                enabled: false,
+                                controller: _controllerDept,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'User Department',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: _formView,
+                          child: PageViewCardListTile(
                               title: 'Status',
                               content: _statusName.toUpperCase()),
-                          PageViewCardListTile(
-                              title: 'Room', content: _roomName),
-                          PageViewCardListTile(
-                            title: 'Location',
-                            content: _locName.toUpperCase(),
+                        ),
+                        Visibility(
+                          visible: _formUpdate,
+                          child: InkWell(
+                            onTap: () {
+                              // snackMe(_statusName);
+                              _statusTapped();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: TextField(
+                                enabled: false,
+                                controller: _controllerStatus,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Status',
+                                ),
+                              ),
+                            ),
                           ),
-                          SizedBox(
+                        ),
+                        Visibility(
+                            visible: _formView,
+                            child: PageViewCardListTile(
+                                title: 'Room', content: _roomName)),
+                        Visibility(
+                          visible: _formUpdate,
+                          child: InkWell(
+                            onTap: () {
+                              snackMe(_roomName);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: TextField(
+                                enabled: false,
+                                controller: _controllerRoom,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Room',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        PageViewCardListTile(
+                          title: 'Location',
+                          content: _locName.toUpperCase(),
+                        ),
+                        Visibility(
+                          visible: _formView,
+                          child: SizedBox(
                             child: CupertinoButton(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
@@ -190,105 +285,26 @@ class _ScanScreenState extends State<ScanScreen> {
                                   _formUpdate = true;
                                   _controllerName.text = _userName;
                                   _controllerDept.text = _userDept;
+                                  _controllerRoom.text = _roomName;
+                                  _controllerStatus.text = _statusName;
                                 });
-                                /* Navigator.push(
+                                Navigator.push(
                                     context,
                                     new MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                           // new ContaPage(new Color(0xFF66BB6A)),
                                           new UpdateScreen(),
-                                    )); */
+                                    ));
                                 // addHistory();
 
                                 // snackMe("Coming soon!");
                               },
                             ),
                           ),
-
-                          /* DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: TextStyle(color: Colors.deepPurple),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.deepPurpleAccent,
                         ),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            dropdownValue = newValue;
-                          });
-                        },
-                        items: <String>['One', 'Two', 'Free', 'Four']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ) */
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: _formUpdate,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          PageViewCardListTile(
-                            title: 'Asset Number',
-                            content: _assetNumber,
-                            biggerContent: true,
-                          ),
-                          PageViewCardListTile(
-                              title: 'Asset Name',
-                              content: _assetName.toUpperCase()),
-                          PageViewCardListTile(
-                              title: 'Buy Date', content: _assetBuyDate),
-                          PageViewCardListTile(
-                              title: 'Brand', content: _brandName),
-                          PageViewCardListTile(
-                              title: 'Category', content: _assetCategoryName),
-                          InkWell(
-                            onTap: () {
-                              snackMe(_userName);
-                            },
-                            child: TextField(
-                              enabled: false,
-                              controller: _controllerName,
-                              autofocus: false,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'User',
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              snackMe(_userDept);
-                            },
-                            child: TextField(
-                              enabled: false,
-                              controller: _controllerDept,
-                              autofocus: false,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'User Department',
-                              ),
-                            ),
-                          ),
-                          PageViewCardListTile(
-                              title: 'Status',
-                              content: _statusName.toUpperCase()),
-                          PageViewCardListTile(
-                              title: 'Room', content: _roomName),
-                          PageViewCardListTile(
-                            title: 'Location',
-                            content: _locName.toUpperCase(),
-                          ),
-                          SizedBox(
+                        Visibility(
+                          visible: _formUpdate,
+                          child: SizedBox(
                             child: CupertinoButton(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
@@ -317,22 +333,22 @@ class _ScanScreenState extends State<ScanScreen> {
                                   _formView = true;
                                   _formUpdate = false;
                                 });
-                                /*  Navigator.push(
-          context,
-          new MaterialPageRoute(
-            builder: (BuildContext context) =>
-                // new ContaPage(new Color(0xFF66BB6A)),
-                new UpdateScreen(),
-          )); */
+                                /* Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          // new ContaPage(new Color(0xFF66BB6A)),
+                                          new UpdateScreen(),
+                                    )); */
                                 // addHistory();
 
                                 // snackMe("Coming soon!");
                               },
                             ),
                           ),
-                        ],
-                      ),
-                    )
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -425,5 +441,23 @@ class _ScanScreenState extends State<ScanScreen> {
     _roomName = widget._roomName;
     _locName = widget._locName;
     super.initState();
+  }
+
+  Future _statusTapped() async {
+    var results =
+        await Navigator.of(context).push(new MaterialPageRoute<dynamic>(
+      builder: (BuildContext context) {
+        return new StatusScreen();
+      },
+    ));
+
+    print(results);
+
+    if (results != null && results.containsKey('selection')) {
+      setState(() {
+        _statusName = results['selection'];
+        _controllerName.text = results['selection'];
+      });
+    }
   }
 }
